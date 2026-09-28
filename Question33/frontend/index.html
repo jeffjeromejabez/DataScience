@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Agriculture — Intelligent Irrigation Decision System | DS_Day01_33</title>
+  <meta name="description" content="Intelligent IoT Soil Moisture & Decision Tree Smart Irrigation System. Reduce agricultural water waste and prevent crop stress with precision AI analytics.">
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Chart.js CDN for interactive charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  
+  <!-- Custom Vanilla CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Header / Navigation Bar -->
+  <header class="app-header" id="mainHeader">
+    <div class="header-container">
+      <div class="brand-group">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981"/>
+            <path d="M12 12c-2.21 0-4 1.79-4 4a4 4 0 0 0 8 0c0-2.21-1.79-4-4-4z" stroke="#34d399"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>AgriSense AI <span class="badge-tag">DS_Day01_33</span></h1>
+          <p class="subtitle">Smart Agriculture Precision Irrigation Decision System</p>
+        </div>
+      </div>
+
+      <div class="header-status-pills">
+        <div class="status-pill live-pill">
+          <span class="pulsing-dot"></span>
+          <span>12 Farms Live</span>
+        </div>
+        <div class="status-pill ai-pill">
+          <span class="ai-chip-icon">⚙</span>
+          <span>Decision Tree Active (100% Acc)</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Global Metrics Bar -->
+  <section class="metrics-ticker-section" id="metricsTicker">
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-label">Monitored Season</span>
+          <span class="metric-icon">📅</span>
+        </div>
+        <div class="metric-value">90 Days</div>
+        <div class="metric-subtext">2,160 Sensor Observations</div>
+      </div>
+
+      <div class="metric-card highlight-metric">
+        <div class="metric-header">
+          <span class="metric-label">Historical Fixed Waste</span>
+          <span class="metric-icon">⚠️</span>
+        </div>
+        <div class="metric-value text-amber">81.5%</div>
+        <div class="metric-subtext">357 / 438 Irrigations Unnecessary</div>
+      </div>
+
+      <div class="metric-card highlight-metric-emerald">
+        <div class="metric-header">
+          <span class="metric-label">Smart Water Reduction</span>
+          <span class="metric-icon">💧</span>
+        </div>
+        <div class="metric-value text-emerald">34.9%</div>
+        <div class="metric-subtext">153 Irrigation Cycles Eliminated</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-label">Flowering Stress Eliminated</span>
+          <span class="metric-icon">🌸</span>
+        </div>
+        <div class="metric-value text-cyan">100%</div>
+        <div class="metric-subtext">Zero Deficit under Dynamic AI</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-header">
+          <span class="metric-label">ML Feature Driver</span>
+          <span class="metric-icon">🎯</span>
+        </div>
+        <div class="metric-value">Moisture (79.3%)</div>
+        <div class="metric-subtext">Root-zone water content dominates</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Synthetic Disclosure Alert Banner -->
+  <div class="disclosure-banner" id="disclosureBanner">
+    <div class="disclosure-content">
+      <span class="disclosure-icon">ℹ️</span>
+      <p>
+        <strong>Synthetic Dataset Disclosure:</strong> As an original dataset was not provided with the challenge specification, a synthetic dataset was generated based on the specified variables and realistic agricultural relationships for demonstrating the proposed analysis and Decision Tree approach.
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Application Body Grid -->
+  <main class="main-layout-container">
+    
+    <!-- Tab Navigation Bar -->
+    <nav class="section-tabs-nav" id="mainTabsNav">
+      <button class="tab-btn active" data-target="tabSimulator" id="btnTabSimulator">
+        <span class="tab-icon">⚡</span> AI Decision Simulator
+      </button>
+      <button class="tab-btn" data-target="tabTelemetry" id="btnTabTelemetry">
+        <span class="tab-icon">📡</span> Multi-Farm Telemetry
+      </button>
+      <button class="tab-btn" data-target="tabVisualizations" id="btnTabVisualizations">
+        <span class="tab-icon">📊</span> Challenge Visualizations (4)
+      </button>
+      <button class="tab-btn" data-target="tabInsights" id="btnTabInsights">
+        <span class="tab-icon">💡</span> 7 Key Insights & Stats
+      </button>
+      <button class="tab-btn" data-target="tabCalculator" id="btnTabCalculator">
+        <span class="tab-icon">💰</span> Water & Cost Calculator
+      </button>
+      <button class="tab-btn" data-target="tabActionPlan" id="btnTabActionPlan">
+        <span class="tab-icon">📋</span> Practical Action Plan
+      </button>
+    </nav>
+
+    <!-- TAB 1: AI DECISION SIMULATOR -->
+    <section class="tab-content active" id="tabSimulator">
+      <div class="simulator-layout">
+        <!-- Input Controls Card -->
+        <div class="card glass-card sim-controls-card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <span class="card-icon-pill">🎛️</span>
+              <h2>Real-Time Sensor Inputs</h2>
+            </div>
+            <div class="presets-dropdown-group">
+              <label for="scenarioPreset" class="preset-label">Preset Scenario:</label>
+              <select id="scenarioPreset" class="custom-select">
+                <option value="custom">-- Custom Real-Time Input --</option>
+                <option value="floweringDeficit">🌸 Flowering Stage Heatwave Deficit (Critical)</option>
+                <option value="postRainSaturated">🌧️ Post-Rainstorm Saturated Soil (Standby)</option>
+                <option value="fixedOverirrigate">⚠️ Calendar Schedule Waste (38% Moisture)</option>
+                <option value="vegetativeModerate">🌱 Vegetative Growth Stage (Adequate)</option>
+                <option value="maturityRipening">🌾 Maturity Phase Natural Dry-down (Standby)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="controls-form">
+            <!-- Soil Moisture Slider -->
+            <div class="control-group">
+              <div class="control-label-row">
+                <label for="inputSoilMoisture">
+                  <span class="icon-indicator">💧</span> Root-Zone Soil Moisture:
+                </label>
+                <span class="slider-display-val" id="dispSoilMoisture">22.5%</span>
+              </div>
+              <input type="range" id="inputSoilMoisture" min="10.0" max="48.0" step="0.5" value="22.5" class="custom-slider moisture-slider">
+              <div class="slider-ticks">
+                <span class="tick-label text-red">Critical &lt;24%</span>
+                <span class="tick-label text-emerald">Optimal 25-38%</span>
+                <span class="tick-label text-cyan">Saturated &gt;40%</span>
+              </div>
+            </div>
+
+            <!-- Crop Stage Selector -->
+            <div class="control-group">
+              <div class="control-label-row">
+                <label><span class="icon-indicator">🌱</span> Crop Developmental Stage:</label>
+                <span class="stage-badge" id="dispCropStageBadge">Flowering (Peak Sensitivity)</span>
+              </div>
+              <div class="stage-radio-tiles">
+                <label class="stage-tile">
+                  <input type="radio" name="cropStageRadio" value="Vegetative">
+                  <div class="tile-body">
+                    <span class="tile-icon">🌱</span>
+                    <span class="tile-name">Vegetative</span>
+                    <span class="tile-sub">Threshold: &lt;23%</span>
+                  </div>
+                </label>
+                <label class="stage-tile active">
+                  <input type="radio" name="cropStageRadio" value="Flowering" checked>
+                  <div class="tile-body">
+                    <span class="tile-icon">🌸</span>
+                    <span class="tile-name">Flowering</span>
+                    <span class="tile-sub">Threshold: &lt;27%</span>
+                  </div>
+                </label>
+                <label class="stage-tile">
+                  <input type="radio" name="cropStageRadio" value="Maturity">
+                  <div class="tile-body">
+                    <span class="tile-icon">🌾</span>
+                    <span class="tile-name">Maturity</span>
+                    <span class="tile-sub">Threshold: &lt;20%</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Environmental Inputs Row -->
+            <div class="two-col-grid">
+              <!-- Rainfall Slider -->
+              <div class="control-group">
+                <div class="control-label-row">
+                  <label for="inputRainfall"><span class="icon-indicator">🌧️</span> Rainfall (12h):</label>
+                  <span class="slider-display-val" id="dispRainfall">0.0 mm</span>
+                </div>
+                <input type="range" id="inputRainfall" min="0.0" max="25.0" step="0.5" value="0.0" class="custom-slider rain-slider">
+                <span class="helper-text" id="rainLockoutNote">Rain &ge;3mm triggers automated pump lockout</span>
+              </div>
+
+              <!-- Temperature Slider -->
+              <div class="control-group">
+                <div class="control-label-row">
+                  <label for="inputTemp"><span class="icon-indicator">🌡️</span> Ambient Temp:</label>
+                  <span class="slider-display-val" id="dispTemp">33.5 °C</span>
+                </div>
+                <input type="range" id="inputTemp" min="15.0" max="45.0" step="0.5" value="33.5" class="custom-slider temp-slider">
+                <span class="helper-text" id="tempNote">High heat increases evapotranspiration</span>
+              </div>
+            </div>
+
+            <!-- Humidity Slider & Time Slot -->
+            <div class="two-col-grid">
+              <div class="control-group">
+                <div class="control-label-row">
+                  <label for="inputHumidity"><span class="icon-indicator">💨</span> Humidity:</label>
+                  <span class="slider-display-val" id="dispHumidity">42.0%</span>
+                </div>
+                <input type="range" id="inputHumidity" min="15.0" max="95.0" step="1" value="42" class="custom-slider">
+              </div>
+
+              <div class="control-group">
+                <div class="control-label-row">
+                  <label for="selectTimeSlot"><span class="icon-indicator">⏰</span> Time of Day:</label>
+                </div>
+                <select id="selectTimeSlot" class="custom-select">
+                  <option value="8">08:00 (Morning Slot - Recommended)</option>
+                  <option value="17">17:00 (Evening Slot)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Output & Decision Tree Explanation Card -->
+        <div class="card glass-card sim-output-card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <span class="card-icon-pill">🧠</span>
+              <h2>Decision Tree Recommendation</h2>
+            </div>
+            <span class="model-badge">Gini Decision Tree v1.0</span>
+          </div>
+
+          <!-- Main Recommendation Hero Banner -->
+          <div class="decision-hero-banner" id="decisionHeroBanner">
+            <div class="decision-status-icon" id="decisionIcon">💧</div>
+            <div class="decision-text-content">
+              <h3 class="decision-headline" id="decisionHeadline">IRRIGATE NOW</h3>
+              <p class="decision-subheadline" id="decisionSubheadline">Critical moisture deficit in sensitive Flowering stage</p>
+            </div>
+            <div class="urgency-pill" id="decisionUrgencyPill">HIGH PRIORITY</div>
+          </div>
+
+          <!-- Decision Logic Pipeline Walkthrough -->
+          <div class="logic-pipeline-section">
+            <h4 class="pipeline-title">Executed Decision Tree Branch:</h4>
+            <div class="pipeline-steps-flow" id="pipelineFlow">
+              <!-- Step 1: Phenology -->
+              <div class="flow-step completed" id="stepStage">
+                <div class="step-num">1</div>
+                <div class="step-details">
+                  <span class="step-label">Stage Requirement</span>
+                  <strong class="step-val" id="stepStageVal">Flowering (&lt;27.0%)</strong>
+                </div>
+              </div>
+              <div class="flow-connector">➔</div>
+              
+              <!-- Step 2: Soil Moisture Check -->
+              <div class="flow-step completed" id="stepMoisture">
+                <div class="step-num">2</div>
+                <div class="step-details">
+                  <span class="step-label">Moisture Check</span>
+                  <strong class="step-val" id="stepMoistureVal">22.5% &lt; 27.0% (Deficit)</strong>
+                </div>
+              </div>
+              <div class="flow-connector">➔</div>
+
+              <!-- Step 3: Rainfall Interlock Check -->
+              <div class="flow-step completed" id="stepRain">
+                <div class="step-num">3</div>
+                <div class="step-details">
+                  <span class="step-label">Rainfall Lockout</span>
+                  <strong class="step-val" id="stepRainVal">0.0 mm &lt; 3.0 mm (No Rain)</strong>
+                </div>
+              </div>
+              <div class="flow-connector">➔</div>
+
+              <!-- Step 4: Final Output -->
+              <div class="flow-step outcome-step" id="stepOutcome">
+                <div class="step-num">4</div>
+                <div class="step-details">
+                  <span class="step-label">Action</span>
+                  <strong class="step-val text-emerald" id="stepOutcomeVal">Trigger Pump (1)</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Operational Instructions & Comparison -->
+          <div class="comparison-dual-box">
+            <div class="comp-panel calendar-panel">
+              <div class="comp-badge">Historical Calendar Routine</div>
+              <p class="comp-desc" id="calPracticeDesc">Would irrigate every 2–3 days blindly. If scheduled today, it turns pump on regardless of rain.</p>
+              <div class="comp-status text-amber" id="calStatus">Status: Fixed Schedule Active</div>
+            </div>
+
+            <div class="comp-panel smart-panel">
+              <div class="comp-badge smart-badge">AgriSense AI Decision</div>
+              <p class="comp-desc" id="smartAdviceDesc">Applies water precisely when root-zone moisture drops below stage threshold, saving water on rain days.</p>
+              <div class="comp-status text-emerald" id="smartBenefit">Benefit: Zero Stress, 100% Precision</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: MULTI-FARM TELEMETRY -->
+    <section class="tab-content" id="tabTelemetry">
+      <div class="card glass-card">
+        <div class="card-header telemetry-header">
+          <div class="card-title-group">
+            <span class="card-icon-pill">🚜</span>
+            <h2>Multi-Farm Sensor Telemetry Hub (12 Farms)</h2>
+          </div>
+          
+          <!-- Farm Selector Pills -->
+          <div class="farm-selector-row" id="farmSelectorRow">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <div class="telemetry-dashboard-body">
+          <!-- Live Gauges Row -->
+          <div class="telemetry-gauges-grid">
+            <!-- Soil Moisture Radial Gauge -->
+            <div class="gauge-card">
+              <h4 class="gauge-title">Root-Zone Soil Moisture</h4>
+              <div class="radial-gauge-wrapper">
+                <svg class="radial-svg" viewBox="0 0 160 160">
+                  <circle class="gauge-bg" cx="80" cy="80" r="65" />
+                  <circle class="gauge-bar" id="gaugeMoistureBar" cx="80" cy="80" r="65" stroke-dasharray="408" stroke-dashoffset="120" />
+                </svg>
+                <div class="gauge-center-text">
+                  <span class="gauge-big-num" id="telemetryMoistureNum">37.2%</span>
+                  <span class="gauge-unit" id="telemetryMoistureStatus">Optimal Zone</span>
+                </div>
+              </div>
+              <div class="gauge-zones-legend">
+                <span class="zone-pill red-zone">&lt;24% Stress</span>
+                <span class="zone-pill green-zone">25-38% Ideal</span>
+                <span class="zone-pill blue-zone">&gt;40% Wet</span>
+              </div>
+            </div>
+
+            <!-- Temperature & Humidity Display -->
+            <div class="gauge-card">
+              <h4 class="gauge-title">Microclimate Conditions</h4>
+              <div class="microclimate-dual-box">
+                <div class="micro-item">
+                  <span class="micro-icon">🌡️</span>
+                  <span class="micro-val" id="telemetryTempNum">31.2 °C</span>
+                  <span class="micro-label">Ambient Temp</span>
+                </div>
+                <div class="micro-item">
+                  <span class="micro-icon">💨</span>
+                  <span class="micro-val" id="telemetryHumNum">48.5%</span>
+                  <span class="micro-label">Rel. Humidity</span>
+                </div>
+              </div>
+              <div class="evapo-card">
+                <span class="evapo-label">Evapotranspiration Index:</span>
+                <span class="evapo-status" id="telemetryEvapoStatus">Moderate Depletion (0.85 mm/h)</span>
+              </div>
+            </div>
+
+            <!-- Rainfall & Crop Stage Display -->
+            <div class="gauge-card">
+              <h4 class="gauge-title">Precipitation & Phenology</h4>
+              <div class="microclimate-dual-box">
+                <div class="micro-item">
+                  <span class="micro-icon">🌧️</span>
+                  <span class="micro-val" id="telemetryRainNum">0.0 mm</span>
+                  <span class="micro-label">12h Precipitation</span>
+                </div>
+                <div class="micro-item">
+                  <span class="micro-icon">🌱</span>
+                  <span class="micro-val" id="telemetryStageNum">Flowering</span>
+                  <span class="micro-label">Active Crop Stage</span>
+                </div>
+              </div>
+              <div class="evapo-card" id="telemetryRainlockCard">
+                <span class="evapo-label">Rain Interlock Status:</span>
+                <span class="evapo-status text-emerald" id="telemetryRainlockStatus">Clear (No Lockout)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Time Scrubber Controls -->
+          <div class="time-scrubber-box">
+            <div class="scrubber-header">
+              <span class="scrubber-label">Observation Timeline (Day 1 to Day 90):</span>
+              <span class="scrubber-date-disp" id="scrubberDateDisp">Day 45 / 90 — 2024-06-14 (08:00 Morning)</span>
+            </div>
+            <input type="range" id="timelineScrubber" min="0" max="179" value="90" class="custom-slider timeline-slider">
+          </div>
+
+          <!-- Farm 90-Day Interactive Mini Chart -->
+          <div class="telemetry-chart-wrapper">
+            <h4 class="chart-box-title">Selected Farm 90-Day Soil Moisture & Rainfall Timeline:</h4>
+            <div class="chart-canvas-holder">
+              <canvas id="farmTimelineChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: CHALLENGE VISUALIZATIONS (4) -->
+    <section class="tab-content" id="tabVisualizations">
+      <div class="viz-hub-grid">
+        <!-- Viz 1 -->
+        <div class="card glass-card viz-card">
+          <div class="viz-card-header">
+            <div class="viz-tag">Primary Viz 1</div>
+            <h3>90-Day Soil Moisture Trend & Stress Boundaries</h3>
+          </div>
+          <p class="viz-desc">Shows continuous daily moisture across all 12 farms, demarcating the acute vulnerability zone during the peak Flowering phase.</p>
+          <div class="viz-interactive-canvas">
+            <canvas id="chartViz1"></canvas>
+          </div>
+          <div class="viz-takeaway">
+            <strong>Key Finding:</strong> Mean soil moisture plummeted to 17.06% during mid-season heatwaves, inducing stress exclusively during Flowering.
+          </div>
+        </div>
+
+        <!-- Viz 2 -->
+        <div class="card glass-card viz-card">
+          <div class="viz-card-header">
+            <div class="viz-tag">Primary Viz 2</div>
+            <h3>Rainfall vs. Soil Moisture & Outcome Correlation</h3>
+          </div>
+          <p class="viz-desc">Scatter analysis demonstrating moisture recharge dynamics and how rainfall &gt;5mm completely prevents water stress.</p>
+          <div class="viz-interactive-canvas">
+            <canvas id="chartViz2"></canvas>
+          </div>
+          <div class="viz-takeaway">
+            <strong>Key Finding:</strong> Rainfall &ge;3.0mm rapidly recharges soil to &gt;35%, making artificial irrigation immediately unnecessary.
+          </div>
+        </div>
+
+        <!-- Viz 3 -->
+        <div class="card glass-card viz-card">
+          <div class="viz-card-header">
+            <div class="viz-tag">Primary Viz 3</div>
+            <h3>Fixed Calendar Schedule Inefficiency (81.5% Waste)</h3>
+          </div>
+          <p class="viz-desc">Quantifies the proportion of historical irrigation events that occurred under already moist or rainy conditions across crop stages.</p>
+          <div class="viz-interactive-canvas">
+            <canvas id="chartViz3"></canvas>
+          </div>
+          <div class="viz-takeaway">
+            <strong>Key Finding:</strong> 95.04% of irrigations in Maturity and 92.36% in Vegetative were potentially unnecessary.
+          </div>
+        </div>
+
+        <!-- Viz 4 -->
+        <div class="card glass-card viz-card">
+          <div class="viz-card-header">
+            <div class="viz-tag">Primary Viz 4</div>
+            <h3>Crop Stage Vulnerability & Stress Distribution</h3>
+          </div>
+          <p class="viz-desc">Compares crop outcome proportions and mean moisture levels across Vegetative, Flowering, and Maturity phases.</p>
+          <div class="viz-interactive-canvas">
+            <canvas id="chartViz4"></canvas>
+          </div>
+          <div class="viz-takeaway">
+            <strong>Key Finding:</strong> 100% of all 246 stressed records occurred during Flowering (29.29% stage stress rate vs 0% in others).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: 7 KEY INSIGHTS -->
+    <section class="tab-content" id="tabInsights">
+      <div class="card glass-card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="card-icon-pill">💡</span>
+            <h2>7 Evidence-Based Insights from Dataset Analysis</h2>
+          </div>
+          <span class="badge-tag">Calculated Directly from 2,160 Records</span>
+        </div>
+
+        <div class="insights-accordion-list" id="insightsList">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: WATER & COST CALCULATOR -->
+    <section class="tab-content" id="tabCalculator">
+      <div class="calculator-layout">
+        <div class="card glass-card calc-inputs-card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <span class="card-icon-pill">🧮</span>
+              <h2>Farm Parameters & Economics</h2>
+            </div>
+          </div>
+
+          <div class="calc-form">
+            <div class="control-group">
+              <div class="control-label-row">
+                <label for="calcAcres">Total Farm Area (Acres):</label>
+                <span class="slider-display-val" id="dispCalcAcres">25 Acres</span>
+              </div>
+              <input type="range" id="calcAcres" min="1" max="200" step="1" value="25" class="custom-slider">
+            </div>
+
+            <div class="control-group">
+              <div class="control-label-row">
+                <label for="calcPumpRate">Pump Discharge Rate (Liters/Minute):</label>
+                <span class="slider-display-val" id="dispCalcPumpRate">400 L/min</span>
+              </div>
+              <input type="range" id="calcPumpRate" min="50" max="1500" step="50" value="400" class="custom-slider">
+            </div>
+
+            <div class="control-group">
+              <div class="control-label-row">
+                <label for="calcTariff">Electricity Tariff per kWh ($ / kWh):</label>
+                <span class="slider-display-val" id="dispCalcTariff">$0.14</span>
+              </div>
+              <input type="range" id="calcTariff" min="0.05" max="0.40" step="0.01" value="0.14" class="custom-slider">
+            </div>
+
+            <div class="control-group">
+              <div class="control-label-row">
+                <label for="calcPumpPower">Pump Rating (Horsepower / HP):</label>
+                <span class="slider-display-val" id="dispCalcPumpPower">7.5 HP (5.6 kW)</span>
+              </div>
+              <input type="range" id="calcPumpPower" min="3" max="25" step="0.5" value="7.5" class="custom-slider">
+            </div>
+          </div>
+        </div>
+
+        <div class="card glass-card calc-results-card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <span class="card-icon-pill">🌱</span>
+              <h2>Projected Seasonal Savings & Ecological Impact</h2>
+            </div>
+            <span class="tag-emerald">34.9% Water Saved</span>
+          </div>
+
+          <div class="roi-cards-grid">
+            <div class="roi-metric-box">
+              <span class="roi-icon">💧</span>
+              <span class="roi-val text-emerald" id="calcWaterSavedLiters">1,468,800 L</span>
+              <span class="roi-label">Groundwater Saved</span>
+            </div>
+
+            <div class="roi-metric-box">
+              <span class="roi-icon">⏱️</span>
+              <span class="roi-val text-cyan" id="calcPumpHoursSaved">61.2 Hours</span>
+              <span class="roi-label">Pumping Run-Time Avoided</span>
+            </div>
+
+            <div class="roi-metric-box">
+              <span class="roi-icon">💵</span>
+              <span class="roi-val text-amber" id="calcCostSavedDollar">$1,223.50</span>
+              <span class="roi-label">Electricity Cost Saved</span>
+            </div>
+
+            <div class="roi-metric-box">
+              <span class="roi-icon">🍃</span>
+              <span class="roi-val text-emerald" id="calcCarbonSavedKg">1,162 kg</span>
+              <span class="roi-label">CO2 Emissions Prevented</span>
+            </div>
+          </div>
+
+          <div class="roi-summary-note">
+            <p>
+              *Based on replacing 12.75 unnecessary irrigation cycles per season with precision Decision Tree telemetry on a 25-acre holding.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: PRACTICAL ACTION PLAN -->
+    <section class="tab-content" id="tabActionPlan">
+      <div class="card glass-card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <span class="card-icon-pill">📋</span>
+            <h2>5-Phase Operational Action Plan for Smart Irrigation</h2>
+          </div>
+          <button class="download-report-btn" id="btnDownloadReport">
+            <span>📥</span> Export Project Report
+          </button>
+        </div>
+
+        <div class="action-phases-grid">
+          <!-- Phase 1 -->
+          <div class="phase-card">
+            <div class="phase-badge">Phase 1</div>
+            <h4>Pre-Irrigation Sensor Check</h4>
+            <p>Query real-time root-zone moisture (15 &amp; 30 cm depths), 12h precipitation, and active crop stage before energizing pumps.</p>
+            <ul class="phase-checklist">
+              <li>✓ Validate sensor connectivity</li>
+              <li>✓ Check 12-hour rain gauge total</li>
+              <li>✓ Log ambient temperature and humidity</li>
+            </ul>
+          </div>
+
+          <!-- Phase 2 -->
+          <div class="phase-card highlight-phase">
+            <div class="phase-badge">Phase 2</div>
+            <h4>Decision Tree Execution</h4>
+            <p>Execute stage-specific dynamic moisture thresholds to determine pump actuation:</p>
+            <div class="threshold-matrix-mini">
+              <div><strong>🌱 Vegetative:</strong> Irrigate if &lt;23% (Rain &lt;3mm)</div>
+              <div><strong>🌸 Flowering:</strong> Irrigate if &lt;27% (Rain &lt;3mm) [Priority]</div>
+              <div><strong>🌾 Maturity:</strong> Irrigate if &lt;20% (Rain &lt;3mm)</div>
+            </div>
+          </div>
+
+          <!-- Phase 3 -->
+          <div class="phase-card">
+            <div class="phase-badge">Phase 3</div>
+            <h4>Post-Rainfall Interlock</h4>
+            <p>Natural rain &ge;3.0mm automatically initiates a mandatory 24-hour pump lockout. Suppress watering until moisture naturally drops below threshold.</p>
+            <ul class="phase-checklist">
+              <li>✓ Prevent waterlogging (&gt;42%)</li>
+              <li>✓ Avoid nitrogen &amp; nutrient leaching</li>
+            </ul>
+          </div>
+
+          <!-- Phase 4 -->
+          <div class="phase-card">
+            <div class="phase-badge">Phase 4</div>
+            <h4>Continuous Dual-Slot Telemetry</h4>
+            <p>Maintain logging at 08:00 (morning cool) and 17:00 (afternoon evaporative peak) to anticipate heat stress spikes.</p>
+          </div>
+
+          <!-- Phase 5 -->
+          <div class="phase-card">
+            <div class="phase-badge">Phase 5</div>
+            <h4>IoT Hardware &amp; Weather API Rollout</h4>
+            <p>Deploy LoRaWAN capacitance probes across pilot farms, calibrate to soil water retention curves, and link with 24h predictive rain forecast APIs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-content">
+      <p><strong>AgriSense AI</strong> — Data Science Challenge DS_Day01_33 | Developed with Python, Scikit-Learn &amp; Vanilla JavaScript</p>
+      <p class="sub-credit">Lightweight Classical Machine Learning Decision System for Smart Agriculture</p>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script src="js/app.js"></script>
+</body>
+</html>
